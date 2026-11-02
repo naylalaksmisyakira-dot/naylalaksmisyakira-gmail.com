@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruang Hangat - Profil Pribadi</title>
+  
+  <!-- Font Google: Quicksand & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Internal -->
+  <style>
+    /* Reset & Variabel Warna Pastel */
+    :root {
+      --bg-cream: #FAF5EF;
+      --pink-soft: #FDE8ED;
+      --pink-main: #F4ABB5;
+      --pink-dark: #E28896;
+      --lavender: #E8E0F0;
+      --mint: #E0F2EE;
+      --text-dark: #5C4A4E;
+      --text-muted: #8A7579;
+      --card-bg: rgba(255, 255, 255, 0.75);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background Lingkaran Pastel Soft */
+    .bg-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.6;
+    }
+    .blob-1 {
+      width: 350px;
+      height: 350px;
+      background-color: var(--pink-soft);
+      top: 50px;
+      left: -100px;
+    }
+    .blob-2 {
+      width: 400px;
+      height: 400px;
+      background-color: var(--lavender);
+      top: 400px;
+      right: -100px;
+    }
+    .blob-3 {
+      width: 300px;
+      height: 300px;
+      background-color: var(--mint);
+      bottom: 200px;
+      left: 100px;
+    }
+
+    /* Layout Utama */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header Navigasi Melayang */
+    header {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      margin-bottom: 40px;
+    }
+    nav {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 12px 28px;
+      border-radius: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(226, 136, 150, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    .logo {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--pink-dark);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: var(--pink-dark);
+    }
+
+    /* Card Style (Glassmorphism Soft) */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 10px 30px rgba(226, 136, 150, 0.08);
+      margin-bottom: 40px;
+    }
+
+    /* Section 1: Perkenalan / Hero */
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .avatar-wrapper {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 24px auto;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-soft), var(--lavender));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(244, 171, 181, 0.3);
+      border: 4px solid #FFF;
+      font-size: 3rem;
+    }
+    .hero h1 {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 2.2rem;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    .hero p.subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 24px auto;
+    }
+    .tag-badge {
+      display: inline-block;
+      background-color: var(--pink-soft);
+      color: var(--pink-dark);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Section 2: Tentang Saya */
+    .section-title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.5rem;
+      color: var(--pink-dark);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .about-text {
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      line-height: 1.8;
+    }
+
+    /* Section 3: Keahlian & Hal yang Disukai */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .skill-card {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(244, 171, 181, 0.2);
+    }
+    .skill-icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+    .skill-card h3 {
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+    .skill-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Section 4: Karya & Proyek */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .project-card {
+      background: #FFF;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--pink-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .project-card h3 {
+      font-size: 1.15rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .project-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .project-tag {
+      align-self: flex-start;
+      background: var(--mint);
+      color: #3E8E7E;
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    /* Section 5: Kontak Interaktif */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .input-field {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--pink-soft);
+      background: rgba(255, 255, 255, 0.9);
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .input-field:focus {
+      border-color: var(--pink-main);
+    }
+    textarea.input-field {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(226, 136, 150, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(226, 136, 150, 0.4);
+    }
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: white;
+      color: var(--text-dark);
+      padding: 14px 24px;
+      border-radius: 50px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border: 2px solid var(--pink-soft);
+      font-size: 0.95rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: all 0.4s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Bintang/Hati Jatuh (Confetti Effect) */
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      animation: floatDown 2s linear forwards;
+    }
+    @keyframes floatDown {
+      0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(200px) rotate(360deg);
+      }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* Responsif untuk Layar HP */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.75rem; }
+      .glass-card { padding: 24px; }
+      nav { padding: 10px 18px; }
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <div class="container">
+    
+    <!-- Navigasi -->
+    <header>
+      <nav>
+        <a href="#" class="logo">✨ Ruang Hangat</a>
+        <ul class="nav-links">
+          <li><a href="#about">Tentang</a></li>
+          <li><a href="#skills">Hobi</a></li>
+          <li><a href="#projects">Karya</a></li>
+          <li><a href="#contact">Sapa</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Header / Hero Section -->
+    <section class="glass-card hero">
+      <div class="avatar-wrapper">
+        🌸
+      </div>
+      <span class="tag-badge">Selamat Datang!</span>
+      <h1>Halo, Saya [Nama Kamu] 💕</h1>
+      <p class="subtitle">
+        Senang sekali kamu mampir ke sudut kecilku di internet ini. Tempat berbagi cerita, karya sederhana, dan hal-hal manis sehari-hari.
+      </p>
+    </section>
+
+    <!-- Tentang Saya -->
+    <section id="about" class="glass-card">
+      <h2 class="section-title">🌷 Sedikit Cerita tentang Saya</h2>
+      <p class="about-text">
+        Anggap saja halaman ini sebagai cangkir teh hangat di sore hari—santai, pelan, dan bikin nyaman. Saya adalah seorang yang senang belajar hal-hal baru di dunia kreatif dan teknologi. 
+      </p>
+      <br>
+      <p class="about-text">
+        Di waktu luang, saya suka mendengarkan musik tenang, menyeduh minuman favorit, serta merapikan ide-ide kecil menjadi sebuah karya yang nyaman dipandang.
+      </p>
+    </section>
+
+    <!-- Keahlian & Hobi -->
+    <section id="skills" class="glass-card">
+      <h2 class="section-title">✨ Hal-hal yang Saya Geluti</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h3>Kreativitas & Desain</h3>
+          <p>Menyusun warna pastel dan layout visual yang lembut di mata.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">💻</div>
+          <h3>Eksplorasi Kode</h3>
+          <p>Belajar membuat tampilan web interaktif secara mandiri.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">☕</div>
+          <h3>Teman Cerita</h3>
+          <p>Senang mendengarkan kisah inspiratif dan berbagi sudut pandang hangat.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🌱</div>
+          <h3>Pembelajar</h3>
+          <p>Selalu menikmati setiap proses belajar tanpa perlu terburu-buru.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Karya & Proyek -->
+    <section id="projects" class="glass-card">
+      <h2 class="section-title">🎀 Jejak Langkah & Karya</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div>
+            <h3>Website Profil Ini</h3>
+            <p>Dibuat khusus dengan nuansa pastel untuk menyapa siapa saja yang mampir dengan penuh rasa hangat.</p>
+          </div>
+          <span class="project-tag">Desain & Kode</span>
+        </div>
+        <div class="project-card">
+          <div>
+            <h3>Jurnal Kebaikan Kecil</h3>
+            <p>Kumpulan catatan dan dokumentasi momen-momen manis yang patut disyukuri setiap harinya.</p>
+          </div>
+          <span class="project-tag">Catatan Pribadi</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kontak / Sapa -->
+    <section id="contact" class="glass-card">
+      <h2 class="section-title">💌 Mari Bertukar Sapa!</h2>
+      <p style="color: var(--text-muted); margin-bottom: 12px;">
+        Pintunya selalu terbuka lebar. Kirimkan pesan atau sekadar ucapan manis di bawah ini ya!
+      </p>
+      
+      <form class="contact-form" id="contactForm">
+        <input type="text" id="nameInput" class="input-field" placeholder="Nama atau panggilanmu..." required>
+        <textarea id="messageInput" class="input-field" placeholder="Tuliskan pesan atau sapaan hangatmu di sini..." required></textarea>
+        <button type="submit" class="btn-submit">Kirim Pesan Manis ✨</button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      Dibuat dengan 💖 dan sentuhan warna pastel. Semoga harimu menyenangkan!
+    </footer>
+
+  </div>
+
+  <!-- Toast Notifikasi -->
+  <div class="toast" id="toast">
+    Terima kasih pesan manisnya! 🌸✨
+  </div>
+
+  <!-- JavaScript Internal -->
+  <script>
+    const contactForm = document.getElementById('contactForm');
+    const toast = document.getElementById('toast');
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('nameInput').value;
+      
+      // Tampilkan toast notifikasi
+      toast.textContent = `Terima kasih atas pesannya, ${name}! 🌸✨`;
+      toast.classList.add('show');
+      
+      // Buat efek bintang & hati berjatuhan
+      createParticles();
+
+      // Reset form setelah dikirim
+      contactForm.reset();
+
+      // Sembunyikan toast setelah 4 detik
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    });
+
+    // Fungsi membuat animasi partikel jatuh
+    function createParticles() {
+      const icons = ['🌸', '✨', '💖', '🎀', '⭐'];
+      
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.textContent = icons[Math.floor(Math.random() * icons.length)];
+        
+        // Posisi acak di sekitar layar
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = (Math.random() * 20 + 40) + 'vh';
+        particle.style.fontSize = (Math.random() * 1.2 + 1) + 'rem';
+        
+        document.body.appendChild(particle);
+        
+        // Hapus elemen setelah animasi selesai
+        setTimeout(() => {
+          particle.remove();
+        }, 2000);
+      }
+    }
+  </script>
+</body>
+  </html>
